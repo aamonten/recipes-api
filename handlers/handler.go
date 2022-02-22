@@ -54,6 +54,14 @@ func (handler *RecipesHandler) NewRecipeHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, recipe)
 }
 
+// swagger:operation GET /recipes recipes listRecipes
+// Returns list of recipes
+// ---
+// produces:
+// - application/json
+// responses:
+//     '200':
+//         description: Successful operation
 func (handler *RecipesHandler) ListRecipesHandler(c *gin.Context) {
 
 	val, err := handler.redisClient.Get("recipes").Result()
@@ -117,6 +125,24 @@ func (handler *RecipesHandler) SearchRecipesHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, recipes)
 }
 
+// swagger:operation PUT /recipes/{id} recipes updateRecipe
+// Update an existing recipe
+// ---
+// parameters:
+// - name: id
+//   in: path
+//   description: ID of the recipe
+//   required: true
+//   type: string
+// produces:
+// - application/json
+// responses:
+//     '200':
+//         description: Successful operation
+//     '400':
+//         description: Invalid input
+//     '404':
+//         description: Invalid recipe ID
 func (handler *RecipesHandler) UpdateRecipeHandler(c *gin.Context) {
 
 	id := c.Param("id")
