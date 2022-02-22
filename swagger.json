@@ -21,170 +21,45 @@
   "host": "localhost:8080",
   "basePath": "/",
   "paths": {
-    "/recipes": {
-      "get": {
-        "description": "Returns list of recipes",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "recipes"
-        ],
-        "operationId": "listRecipes",
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          }
-        }
-      },
+    "/refresh": {
       "post": {
-        "description": "Create a new recipe",
+        "description": "Get new token in exchange for an old one",
         "produces": [
           "application/json"
         ],
         "tags": [
-          "recipes"
+          "auth"
         ],
-        "operationId": "newRecipe",
-        "parameters": [
-          {
-            "type": "string",
-            "x-go-name": "ID",
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "x-go-name": "Name",
-            "name": "name",
-            "in": "query"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "x-go-name": "Tags",
-            "name": "tags",
-            "in": "query"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "x-go-name": "Ingredients",
-            "name": "ingredients",
-            "in": "query"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "x-go-name": "Instructions",
-            "name": "instructions",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "PublishedAt",
-            "name": "publishedAt",
-            "in": "query"
-          }
-        ],
+        "operationId": "refresh",
         "responses": {
           "200": {
             "description": "Successful operation"
           },
           "400": {
-            "description": "Invalid input"
+            "description": "Token is new and doesn't need a refresh"
+          },
+          "401": {
+            "description": "Invalid credentials"
           }
         }
       }
     },
-    "/recipes/search": {
-      "get": {
-        "description": "Search recipes based on tags",
+    "/signin": {
+      "post": {
+        "description": "Login with username and password",
         "produces": [
           "application/json"
         ],
         "tags": [
-          "recipes"
+          "auth"
         ],
-        "operationId": "findRecipe",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "recipe tag",
-            "name": "tag",
-            "in": "query",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          }
-        }
-      }
-    },
-    "/recipes/{id}": {
-      "put": {
-        "description": "Update an existing recipe",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "recipes"
-        ],
-        "operationId": "updateRecipe",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "ID of the recipe",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
+        "operationId": "signIn",
         "responses": {
           "200": {
             "description": "Successful operation"
           },
-          "400": {
-            "description": "Invalid input"
-          },
-          "404": {
-            "description": "Invalid recipe ID"
-          }
-        }
-      },
-      "delete": {
-        "description": "Delete an existing recipe",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "recipes"
-        ],
-        "operationId": "deleteRecipe",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "ID of the recipe",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "404": {
-            "description": "Invalid recipe ID"
+          "401": {
+            "description": "Invalid credentials"
           }
         }
       }
