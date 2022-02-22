@@ -54,7 +54,7 @@ func main() {
 
 	}
 
-	router.Run()
+	router.RunTLS(":443", "certs/localhost.crt", "certs/localhost.key")
 }
 
 var recipesHandler *handlers.RecipesHandler
